@@ -30,3 +30,6 @@
 #
 # Modify inputs json "clumio_bulk_onbaord_example_inputs.json" to include your accounts, regions, and services"
 # Execute the step function passing it the contents of the modified inputs json.
+
+# clumio_connet_aws_account.py - this is the lambda function
+# clumio_sdk_v8c.py - this is the "helper" sdk
