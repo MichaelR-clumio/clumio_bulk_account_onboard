@@ -1,0 +1,31 @@
+{
+  "bear": "eyJhbGciOiJSUzI1UbA...",
+  "organization_role_arn": "arn:aws:iam::<ou-account-id>:role/<ou-role>",
+  "assume_policy_arn": "arn:aws:iam::<ou-account-id>:policy/<assume policy in ou-role>",
+  "debug": 99,
+  "accounts": [
+    {
+      "aws_account_id": "370335596856",
+      "aws_region_list": [
+        "us-east-1",
+        "us-west-2"
+      ],
+      "aws_service_list": [
+        "EBS",
+        "S3",
+        "RDS",
+        "DynamoDB",
+        "EC2MSSQL"
+      ]
+    },
+    {
+      "aws_account_id": "121125738831",
+      "aws_region_list": [
+        "us-east-2"
+      ],
+      "aws_service_list": [
+        "S3"
+      ]
+    }
+  ]
+}

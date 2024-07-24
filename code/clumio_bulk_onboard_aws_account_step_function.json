@@ -1,0 +1,55 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "Parse Input Data",
+  "States": {
+    "Parse Input Data": {
+      "Type": "Map",
+      "ItemProcessor": {
+        "ProcessorConfig": {
+          "Mode": "INLINE"
+        },
+        "StartAt": "Set lambda input",
+        "States": {
+          "Set lambda input": {
+            "Type": "Pass",
+            "Next": "clumio account onboard lambda",
+            "Parameters": {
+              "startTime.$": "$$.Execution.StartTime",
+              "execName.$": "$$.Execution.Name",
+              "bear.$": "$$.Execution.Input.bear",
+              "debug.$": "$$.Execution.Input.debug",
+              "organization_role_arn.$": "$$.Execution.Input.organization_role_arn",
+              "assume_policy_arn.$": "$$.Execution.Input.assume_policy_arn",
+              "account.$": "$"
+            }
+          },
+          "clumio account onboard lambda": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "OutputPath": "$.Payload",
+            "Parameters": {
+              "Payload.$": "$",
+              "FunctionName": "arn:aws:lambda:us-east-1:<deployment_account>>:function:clumio-bulk-onboard-aws-accounts:$LATEST"
+            },
+            "Retry": [
+              {
+                "ErrorEquals": [
+                  "Lambda.ServiceException",
+                  "Lambda.AWSLambdaException",
+                  "Lambda.SdkClientException",
+                  "Lambda.TooManyRequestsException"
+                ],
+                "IntervalSeconds": 1,
+                "MaxAttempts": 3,
+                "BackoffRate": 2
+              }
+            ],
+            "End": true
+          }
+        }
+      },
+      "End": true,
+      "ItemsPath": "$.accounts"
+    }
+  }
+}

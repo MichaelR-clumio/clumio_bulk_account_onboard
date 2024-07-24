@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda function deploy for bulk onboard
+Resources:
+  List:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: clumio-bulk-onboard-aws-accounts
+      Runtime: python3.12
+      Timeout: 60
+      Role: arn:aws:iam::<code deployment account>:role/<role that can assume our role>
+      Handler: clumio_connect_aws_account.lambda_handler
+      Code:
+        S3Bucket: <bucket name where to place lambda zip file>
+        S3Key: clumio_connect_code.zip
+      Description: Test
+      TracingConfig:
+        Mode: Active
